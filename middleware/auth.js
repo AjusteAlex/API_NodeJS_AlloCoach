@@ -1,22 +1,19 @@
 const jwt = require('jsonwebtoken');
 
-module.exports = () => {
-    return (req, res, next) => {
-        if(req.headers.authorization){
-            const token = req.headers.authorization.split(" ")[1];
-            try {
-                if(jwt.verify(token, process.env.SECRET)){
-                    res.locals.user = jwt.verify(token, process.env.SECRET)
-                    next();
-                }else{
-                    res.status(401).json({message: 'Pas le droit d\'être la'})
-                }
-            }catch (error){
-                res.status(401).json({message: 'Pas le droit d\'être la'})
-            }
-        }
-        else {
-            res.status(401).json({message: 'Pas le droit d\'être la'})
-        }
+module.exports = (req, res, next) => {
+  try {
+    const token = req.headers.authorization.split(' ')[1];
+    const decodedToken = jwt.verify(token, 'RANDOM_TOKEN_SECRET');
+    const code_auth = decodedToken.code_auth;
+
+    if (code_auth) {
+        next();
+    } else {
+        res.json({message : 'Identifiant incorrect'})
     }
-}
+  } catch {
+    res.status(401).json({
+      error: new Error('Identifiant incorrect !')
+    });
+  }
+};
