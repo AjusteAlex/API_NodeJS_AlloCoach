@@ -9,8 +9,6 @@ router.post('/register/code-verif-user', auth_controller.user_auth_code_verif)
 router.post('/register/role-user',auth, auth_controller.user_role)
 
 
-
-router.post('/register/coach', auth_controller.coach_register)
 router.post('/login', auth_controller.user_login)
 
 
