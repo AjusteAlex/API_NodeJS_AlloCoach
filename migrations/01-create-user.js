@@ -35,6 +35,9 @@ module.exports = {
         allowNull: true,
         type: Sequelize.STRING
       },
+      auth_token: {
+        type: Sequelize.STRING,
+      },
       role: {
         type: Sequelize.STRING
       },

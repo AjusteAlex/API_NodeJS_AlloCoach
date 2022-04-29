@@ -1,3 +1,9 @@
+// Gestion des connexions
+// Enregistrement des numéros de téléphones et génération des codes d'authentification
+// Création de token et ajout du role (coach ou utilisateur)
+
+
+
 const User = require('../lib/models').User
 const twilio = require('twilio');
 require('dotenv').config();
@@ -49,20 +55,20 @@ exports.user_auth_code_verif = (req, res) => {
             phone_number: req.body.phone_number
         }
     })
-    .then(data => {
-        if(data.code_auth == req.body.code_auth){
+    .then(user => {
+        if(user.code_auth == req.body.code_auth){
             // si le code est correct, génération du token
-            res.status(201).json({
-                phone_number: data.phone_number,
-                token: jwt.sign(
-                    { 
-                        code_auth: data.code_auth, 
-                        id: data.id
-                    },
-                    process.env.SECRET,
-                    { expiresIn: '24h' }
-                )
-            })
+            const token = jwt.sign(
+                { 
+                    code_auth: user.code_auth, 
+                    id: user.id
+                },
+                process.env.SECRET,
+                { expiresIn: '24h' }
+            )
+            console.log(user)
+            user.update({auth_token: token})
+            res.status(200).json({phone_number: user.phone_number, token})
         }else{
             res.status(400).json({message : 'Mauvais code rentré'})
         }
