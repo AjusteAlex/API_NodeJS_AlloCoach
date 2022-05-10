@@ -8,11 +8,6 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      username: {
-        unique: true,
-        allowNull: true,
-        type: Sequelize.STRING
-      },
       name: {
         allowNull: true,
         type: Sequelize.STRING
@@ -21,8 +16,7 @@ module.exports = {
         allowNull: true,
         type: Sequelize.STRING
       },
-      email: {
-        is: /^[\w\.\-\_]+@([\w\.\-+]+\.[\w\.\-+]+)$/i,
+      username: {
         unique: true,
         allowNull: true,
         type: Sequelize.STRING
@@ -38,6 +32,12 @@ module.exports = {
       auth_token: {
         type: Sequelize.STRING,
       },
+      email: {
+        is: /^[\w\.\-\_]+@([\w\.\-+]+\.[\w\.\-+]+)$/i,
+        unique: true,
+        allowNull: true,
+        type: Sequelize.STRING
+      },
       role: {
         type: Sequelize.STRING
       },
@@ -45,6 +45,9 @@ module.exports = {
         type: Sequelize.BOOLEAN
       },
       bpjeps_name: {
+        type: Sequelize.STRING
+      },
+      bpjeps_file: {
         type: Sequelize.STRING
       },
       picture: {
