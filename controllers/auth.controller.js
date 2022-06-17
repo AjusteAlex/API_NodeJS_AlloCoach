@@ -86,7 +86,6 @@ exports.user_role = (req, res) => {
         if(req.headers.authorization && req.headers){
             // récupération du token de l'utilisateur
             let token = req.headers.authorization.split(' ')[1];
-            console.log(token);
             try {
                 // token décodé
                 decodedToken = jwt.verify(token, process.env.SECRET);

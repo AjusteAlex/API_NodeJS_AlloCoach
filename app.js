@@ -3,6 +3,7 @@ const app = express()
 // const db = require(`${__dirname}/lib/models/index.js`)
 const bodyParser = require('body-parser')
 var cors = require('cors');
+const auth = require('./middleware/auth');
 
 const authRouter = require('./routes/auth.route');
 const userRouter = require('./routes/user.route');
@@ -17,7 +18,7 @@ app.use(cors());
 app.use('/auth', authRouter);
 app.use('/users', userRouter);
 app.use('/location', locationRouter);
-app.use('/availability', availabilityRouter);
+app.use('/availability',auth, availabilityRouter);
 app.use('/reservation', reservationRouter);
 
 
